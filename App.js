@@ -32,6 +32,6 @@ const App = () => {
     if(loading){
       return <></>
     }
-    return <Navigation token={'token'} />
+    return <Navigation token={token} />
 }
 export default App
