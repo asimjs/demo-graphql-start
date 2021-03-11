@@ -8,9 +8,9 @@ import Update from './src/screens/Update'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Stack = createStackNavigator()
-const Navigation = () => (
+const Navigation = ({token}) => (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName='Signin'>
+        <Stack.Navigator initialRouteName={`${token?'Home':'Signin'}`}>
             <Stack.Screen name='Signin' component={SignIn} />
             <Stack.Screen name='Signup' component={SignUp} />
             <Stack.Screen name='Home' component={Home} />
@@ -21,16 +21,17 @@ const Navigation = () => (
 const App = () => {
     const [token,setToken] = useState()
     const [loading,setLoading] = useState(true)
-    console.log('Called')
     useEffect(() => {
         loadToken()
     }, [])
     const loadToken = async () => {
         const token = await AsyncStorage.getItem('token')
         setToken(token)
-        console.log('token', token)
         setLoading(false)
     }
-    return <Navigation />
+    if(loading){
+      return <></>
+    }
+    return <Navigation token={'token'} />
 }
 export default App
